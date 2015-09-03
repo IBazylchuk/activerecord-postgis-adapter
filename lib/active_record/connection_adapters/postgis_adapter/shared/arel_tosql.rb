@@ -57,3 +57,7 @@ module Arel  # :nodoc:
 
   end
 end
+
+class BindSubstitutionPostGIS < ::Arel::Visitors::PostGIS # :nodoc:
+  include ::Arel::Visitors::BindVisitor
+end

@@ -48,7 +48,11 @@ module ActiveRecord  # :nodoc:
           super
           # Rails 3.2 way of defining the visitor: do so in the constructor
           if defined?(@visitor) && @visitor
-            @visitor = ::Arel::Visitors::PostGIS.new(self)
+            if args_[3].fetch(:prepared_statements) { true }
+              @visitor = ::Arel::Visitors::PostGIS.new(self)
+            else
+              @visitor = BindSubstitutionPostGIS.new self
+            end
           end
         end
 
